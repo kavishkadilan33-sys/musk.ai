@@ -1,0 +1,461 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MUSK AI - Your personal AI English learning platform for IELTS, PTE and spoken English.">
+<title>MUSK AI | Master English</title>
+<style>
+:root {
+  --bg:#080d18;
+  --panel:#111a2b;
+  --panel2:#17243a;
+  --blue:#55d9ed;
+  --purple:#9276ff;
+  --text:#f5f7ff;
+  --muted:#9baac1;
+  --border:#26344b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+button{cursor:pointer;font:inherit}
+a{color:inherit;text-decoration:none}
+.app{display:flex;min-height:100vh}
+.sidebar{
+  width:245px;background:#0c1423;
+  border-right:1px solid var(--border);
+  padding:26px 18px;position:fixed;
+  inset:0 auto 0 0;z-index:5;
+}
+.logo{font-size:26px;font-weight:900;letter-spacing:2px}
+.logo span{color:var(--blue)}
+.tagline{font-size:10px;color:var(--muted);margin:7px 0 36px}
+.nav-title{font-size:10px;color:var(--muted);margin:24px 10px 12px;letter-spacing:1.5px}
+.nav button{
+  width:100%;padding:13px 12px;margin:3px 0;
+  border:0;background:transparent;color:var(--muted);
+  border-radius:10px;text-align:left;font-size:14px;
+}
+.nav button:hover,.nav button.active{
+  background:#192940;color:var(--blue);
+}
+.sidebar-bottom{
+  position:absolute;bottom:22px;left:18px;right:18px;
+  padding:15px;border:1px solid var(--border);
+  border-radius:12px;font-size:12px;color:var(--muted);
+}
+.main{margin-left:245px;width:calc(100% - 245px)}
+.topbar{
+  height:75px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 35px;background:#0b1220;
+}
+.topbar small{color:var(--muted)}
+.avatar{
+  width:36px;height:36px;border-radius:50%;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  color:#07111e;font-weight:900;
+}
+.content{max-width:1250px;margin:auto;padding:34px}
+.page{display:none}
+.page.active{display:block}
+.welcome{margin-bottom:28px}
+.welcome h1{font-size:32px;margin-bottom:9px}
+.welcome p{color:var(--muted);line-height:1.6}
+.hero{
+  padding:34px;border-radius:20px;
+  background:linear-gradient(115deg,#142c48,#28204b);
+  border:1px solid #35476c;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:25px;margin-bottom:26px;overflow:hidden;
+}
+.hero h2{font-size:30px;line-height:1.3;max-width:500px}
+.hero p{color:#c1d0e8;margin:13px 0 20px;line-height:1.6}
+.hero-art{font-size:90px;filter:drop-shadow(0 0 24px #55d9ed)}
+.btn{
+  background:var(--blue);color:#06131d;border:0;
+  padding:12px 19px;border-radius:9px;font-weight:800;
+}
+.btn:hover{filter:brightness(1.1)}
+.btn.secondary{
+  background:#24344c;color:white;border:1px solid #43516c;
+}
+.grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:17px;margin:20px 0 28px;
+}
+.stat,.card,.lesson,.practice-box{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:15px;padding:21px;
+}
+.stat small,.muted{color:var(--muted)}
+.stat h2{font-size:28px;margin:13px 0 5px}
+.section-title{font-size:19px;margin:28px 0 15px}
+.cards{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:17px;
+}
+.card{transition:.2s}
+.card:hover{transform:translateY(-3px);border-color:#526e99}
+.card-icon{font-size:30px;margin-bottom:17px}
+.card h3{margin-bottom:9px}
+.card p{font-size:13px;color:var(--muted);line-height:1.6;min-height:42px}
+.card button{margin-top:17px;width:100%}
+.progress{
+  height:7px;background:#27364c;border-radius:9px;
+  overflow:hidden;margin-top:12px;
+}
+.progress div{height:100%;background:var(--blue);width:0}
+.lesson{margin-bottom:13px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lesson p{font-size:12px;color:var(--muted);margin-top:6px}
+.field{
+  width:100%;padding:13px;margin:12px 0;
+  background:#0b1423;border:1px solid var(--border);
+  border-radius:9px;color:white;outline:none;
+}
+textarea.field{min-height:140px;resize:vertical}
+.result{
+  padding:16px;background:#0b1423;border:1px solid var(--border);
+  border-radius:10px;margin-top:15px;line-height:1.7;
+  white-space:pre-wrap;
+}
+.option{
+  display:block;width:100%;text-align:left;padding:14px;
+  border:1px solid var(--border);border-radius:9px;
+  background:#111a2b;color:white;margin:10px 0;
+}
+.option:hover{border-color:var(--blue)}
+.footer{text-align:center;color:var(--muted);font-size:11px;padding:30px}
+.mobile-menu{display:none;background:transparent;color:white;border:0;font-size:22px}
+@media(max-width:850px){
+  .sidebar{display:none}
+  .sidebar.open{display:block}
+  .main{margin-left:0;width:100%}
+  .mobile-menu{display:block}
+  .content{padding:20px}
+  .grid,.cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero-art{font-size:55px}
+}
+@media(max-width:540px){
+  .grid,.cards{grid-template-columns:1fr}
+  .hero{padding:23px}
+  .hero h2{font-size:23px}
+  .hero-art{display:none}
+  .topbar{padding:0 17px}
+  .welcome h1{font-size:26px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo">MUSK <span>AI.</span></div>
+  <div class="tagline">MASTER ENGLISH. UNLOCK YOUR FUTURE.</div>
+  <div class="nav-title">MAIN MENU</div>
+  <nav class="nav">
+    <button class="active" data-page="home">⌂ &nbsp; Dashboard</button>
+    <button data-page="ielts">◎ &nbsp; IELTS Preparation</button>
+    <button data-page="pte">◈ &nbsp; PTE Preparation</button>
+    <button data-page="speaking">◉ &nbsp; Speaking Practice</button>
+    <button data-page="writing">✎ &nbsp; Writing Practice</button>
+    <button data-page="vocabulary">▤ &nbsp; Vocabulary</button>
+    <button data-page="quiz">✧ &nbsp; English Quiz</button>
+  </nav>
+  <div class="nav-title">ACCOUNT</div>
+  <nav class="nav">
+    <button data-page="progress">▥ &nbsp; My Progress</button>
+    <button data-page="about">ⓘ &nbsp; About MUSK AI</button>
+  </nav>
+  <div class="sidebar-bottom">
+    <strong>YOUR DAILY GOAL</strong>
+    <p style="margin-top:7px">Keep learning every day.</p>
+  </div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:13px">
+    <button class="mobile-menu" id="menuBtn">☰</button>
+    <div><strong id="pageTitle">Dashboard</strong><br>
+    <small>Your English journey starts here.</small></div>
+  </div>
+  <div class="avatar">M</div>
+</header>
+
+<div class="content">
+
+<section class="page active" id="home">
+  <div class="welcome">
+    <h1>Welcome to MUSK AI <span style="color:var(--blue)">✦</span></h1>
+    <p>Build confidence. Improve your English. Achieve your goals.</p>
+  </div>
+  <div class="hero">
+    <div>
+      <h2>Your journey to <span style="color:var(--blue)">English fluency</span> starts today.</h2>
+      <p>Practice speaking, prepare for IELTS and PTE, and develop your English skills.</p>
+      <button class="btn" onclick="showPage('speaking')">Start Learning →</button>
+    </div>
+    <div class="hero-art">🌐</div>
+  </div>
+  <div class="grid">
+    <div class="stat"><small>LESSONS COMPLETED</small><h2 id="statLessons">0</h2><small>Your learning journey</small></div>
+    <div class="stat"><small>QUIZ SCORE</small><h2 id="statScore">0%</h2><small>Latest quiz result</small></div>
+    <div class="stat"><small>VOCABULARY</small><h2 id="statWords">0</h2><small>Words practiced</small></div>
+  </div>
+  <h2 class="section-title">Explore Your Learning</h2>
+  <div class="cards">
+    <div class="card"><div class="card-icon">🎓</div><h3>IELTS Preparation</h3><p>Practice all four IELTS skills and prepare for your exam.</p><button class="btn secondary" onclick="showPage('ielts')">Explore IELTS →</button></div>
+    <div class="card"><div class="card-icon">💻</div><h3>PTE Academic</h3><p>Improve your performance with PTE task practice.</p><button class="btn secondary" onclick="showPage('pte')">Explore PTE →</button></div>
+    <div class="card"><div class="card-icon">🎙️</div><h3>Spoken English</h3><p>Develop fluency, confidence and communication skills.</p><button class="btn secondary" onclick="showPage('speaking')">Start Speaking →</button></div>
+  </div>
+</section>
+
+<section class="page" id="ielts">
+  <div class="welcome"><h1>IELTS Preparation</h1><p>Prepare for IELTS Academic and General Training.</p></div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">🎤</div><h3>Speaking</h3><p>Practice IELTS speaking topics and sample questions.</p><button class="btn" onclick="showPage('speaking')">Practice Now</button></div>
+    <div class="card"><div class="card-icon">✍️</div><h3>Writing</h3><p>Practice Task 1 and Task 2 writing.</p><button class="btn" onclick="showPage('writing')">Practice Now</button></div>
+    <div class="card"><div class="card-icon">📖</div><h3>Reading</h3><p>Develop reading comprehension and vocabulary.</p><button class="btn" onclick="showPage('quiz')">Practice Now</button></div>
+    <div class="card"><div class="card-icon">🎧</div><h3>Listening</h3><p>Improve listening comprehension.</p><button class="btn" onclick="showPage('quiz')">Practice Now</button></div>
+  </div>
+  <div class="practice-box" style="margin-top:22px">
+    <h3>IELTS Writing Task 2</h3>
+    <p class="muted" style="margin:10px 0">Some people believe technology makes life easier. To what extent do you agree or disagree?</p>
+    <button class="btn" onclick="showPage('writing')">Start Writing</button>
+  </div>
+</section>
+
+<section class="page" id="pte">
+  <div class="welcome"><h1>PTE Academic</h1><p>Develop your skills with practice activities.</p></div>
+  <div class="cards">
+    <div class="card"><div class="card-icon">📢</div><h3>Read Aloud</h3><p>Read a passage clearly and practice pronunciation.</p><button class="btn" onclick="showPage('speaking')">Practice</button></div>
+    <div class="card"><div class="card-icon">🔁</div><h3>Repeat Sentence</h3><p>Improve listening and speaking memory.</p><button class="btn" onclick="showPage('speaking')">Practice</button></div>
+    <div class="card"><div class="card-icon">🖼️</div><h3>Describe Image</h3><p>Learn to describe charts and images.</p><button class="btn" onclick="showPage('speaking')">Practice</button></div>
+    <div class="card"><div class="card-icon">📝</div><h3>Write Essay</h3><p>Develop your academic writing skills.</p><button class="btn" onclick="showPage('writing')">Practice</button></div>
+  </div>
+  <p class="muted" style="margin-top:20px;font-size:12px">Practice activities are educational exercises, not official Pearson tests or scores.</p>
+</section>
+
+<section class="page" id="speaking">
+  <div class="welcome"><h1>Speaking Practice 🎙️</h1><p>Practice speaking English using your microphone.</p></div>
+  <div class="practice-box">
+    <h3>Today's Speaking Topic</h3>
+    <p style="margin:13px 0;line-height:1.7">Describe your hometown. What do you like most about it? Would you recommend it to visitors?</p>
+    <button class="btn" id="speakBtn">🎙️ Start Voice Recognition</button>
+    <button class="btn secondary" id="stopBtn">Stop</button>
+    <div class="result" id="speechResult">Your recognized speech will appear here. Microphone permission is required.</div>
+    <p class="muted" style="font-size:12px;margin-top:12px">Voice recognition availability depends on your browser and language settings.</p>
+  </div>
+  <div class="practice-box" style="margin-top:18px">
+    <h3>Speaking Tips</h3>
+    <p class="muted" style="line-height:1.8;margin-top:10px">• Speak clearly and naturally.<br>• Use complete sentences.<br>• Give examples to support your ideas.<br>• Practice every day.</p>
+  </div>
+</section>
+
+<section class="page" id="writing">
+  <div class="welcome"><h1>Writing Practice ✍️</h1><p>Improve your English writing skills.</p></div>
+  <div class="practice-box">
+    <h3>Write Your Answer</h3>
+    <p class="muted" style="margin-top:10px">Topic: Do you think learning English is important for career development?</p>
+    <textarea class="field" id="essay" placeholder="Start writing your essay here..."></textarea>
+    <button class="btn" id="checkWriting">Check My Writing</button>
+    <div class="result" id="writingResult">Basic writing statistics will appear here. AI-powered correction will be added in a later version.</div>
+  </div>
+</section>
+
+<section class="page" id="vocabulary">
+  <div class="welcome"><h1>Vocabulary Builder 📚</h1><p>Learn useful English words every day.</p></div>
+  <div class="cards" id="wordCards"></div>
+</section>
+
+<section class="page" id="quiz">
+  <div class="welcome"><h1>English Quiz ✨</h1><p>Test your English grammar knowledge.</p></div>
+  <div class="practice-box">
+    <div id="quizArea">
+      <h3 id="question">Loading question...</h3>
+      <div id="answers"></div>
+      <p class="muted" id="quizCounter"></p>
+    </div>
+    <div id="quizEnd" style="display:none">
+      <h2>Your Result</h2><h1 id="finalScore" style="margin:20px 0;color:var(--blue)">0%</h1>
+      <button class="btn" onclick="startQuiz()">Try Again</button>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="progress">
+  <div class="welcome"><h1>My Progress 📊</h1><p>Track your learning journey.</p></div>
+  <div class="grid">
+    <div class="stat"><small>LESSONS</small><h2 id="progressLessons">0</h2></div>
+    <div class="stat"><small>BEST QUIZ SCORE</small><h2 id="progressScore">0%</h2></div>
+    <div class="stat"><small>WORDS LEARNED</small><h2 id="progressWords">0</h2></div>
+  </div>
+  <div class="practice-box">
+    <h3>Your Learning Goal</h3>
+    <p class="muted" style="margin-top:10px">Complete one lesson every day to build a consistent learning habit.</p>
+    <div class="progress"><div id="goalProgress"></div></div>
+  </div>
+</section>
+
+<section class="page" id="about">
+  <div class="welcome"><h1>About MUSK AI</h1><p>Your personal English learning companion.</p></div>
+  <div class="practice-box">
+    <h2 style="color:var(--blue)">MUSK AI</h2>
+    <p style="margin-top:15px;line-height:1.9;color:var(--muted)">MUSK AI is an English learning platform designed to help learners worldwide improve their English communication skills, prepare for IELTS and PTE, and build confidence through daily practice.</p>
+    <h3 style="margin-top:25px">Our Mission</h3>
+    <p class="muted" style="margin-top:10px">Making English learning accessible, practical and engaging for everyone.</p>
+    <p style="margin-top:25px;font-size:12px;color:var(--muted)">Independent educational project. Not affiliated with IELTS, Pearson, or any examination authority.</p>
+  </div>
+</section>
+
+</div>
+<div class="footer">© 2026 MUSK AI · LEARN · PRACTICE · GROW</div>
+</main>
+</div>
+
+<script>
+const pages = {
+ home:"Dashboard",ielts:"IELTS Preparation",pte:"PTE Preparation",
+ speaking:"Speaking Practice",writing:"Writing Practice",
+ vocabulary:"Vocabulary Builder",quiz:"English Quiz",
+ progress:"My Progress",about:"About MUSK AI"
+};
+
+let stats = JSON.parse(localStorage.getItem("muskStats") || '{"lessons":0,"score":0,"words":0}');
+function saveStats(){
+ localStorage.setItem("muskStats",JSON.stringify(stats));
+ updateStats();
+}
+function updateStats(){
+ ["statLessons","progressLessons"].forEach(id=>document.getElementById(id).textContent=stats.lessons);
+ ["statScore","progressScore"].forEach(id=>document.getElementById(id).textContent=stats.score+"%");
+ ["statWords","progressWords"].forEach(id=>document.getElementById(id).textContent=stats.words);
+ document.getElementById("goalProgress").style.width=Math.min(stats.lessons*10,100)+"%";
+}
+function showPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+ document.getElementById(id).classList.add("active");
+ document.getElementById("pageTitle").textContent=pages[id];
+ document.getElementById("sidebar").classList.remove("open");
+ window.scrollTo(0,0);
+ if(id==="vocabulary") renderWords();
+ if(id==="quiz") startQuiz();
+}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+document.getElementById("menuBtn").onclick=()=>document.getElementById("sidebar").classList.toggle("open");
+
+const words=[
+ ["Achieve","To successfully reach a goal.","She worked hard to achieve her dream."],
+ ["Confident","Feeling sure about yourself.","I feel confident when speaking English."],
+ ["Improve","To make something better.","Practice every day to improve your skills."],
+ ["Opportunity","A chance to do something.","Learning English creates new opportunities."],
+ ["Fluent","Able to speak smoothly and easily.","She is fluent in English."],
+ ["Develop","To grow or make progress.","Reading helps develop vocabulary."]
+];
+let learned=JSON.parse(localStorage.getItem("muskWords")||"[]");
+function renderWords(){
+ document.getElementById("wordCards").innerHTML=words.map((w,i)=>`
+ <div class="card"><div class="card-icon">📖</div><h3>${w[0]}</h3>
+ <p>${w[1]}</p><p style="margin-top:9px;color:#55d9ed">${w[2]}</p>
+ <button class="btn ${learned.includes(i)?"secondary":""}" onclick="learnWord(${i})">${learned.includes(i)?"Learned ✓":"Mark as Learned"}</button></div>`).join("");
+}
+function learnWord(i){
+ if(!learned.includes(i)){learned.push(i);stats.words=learned.length;localStorage.setItem("muskWords",JSON.stringify(learned));saveStats();}
+ renderWords();
+}
+
+const questions=[
+ {q:"Choose the correct sentence.",a:["She go to school.","She goes to school.","She going to school."],c:1},
+ {q:"What is the past tense of 'write'?",a:["Writed","Written","Wrote"],c:2},
+ {q:"Choose the correct article: ___ apple.",a:["A","An","The"],c:1},
+ {q:"Which word is a synonym for 'happy'?",a:["Joyful","Angry","Tired"],c:0},
+ {q:"Choose the correct sentence.",a:["I have lived here for five years.","I live here since five years.","I living here five years."],c:0}
+];
+let qIndex=0,correct=0,answered=false;
+function startQuiz(){
+ qIndex=0;correct=0;answered=false;
+ document.getElementById("quizArea").style.display="block";
+ document.getElementById("quizEnd").style.display="none";
+ renderQuestion();
+}
+function renderQuestion(){
+ const q=questions[qIndex];
+ document.getElementById("question").textContent=q.q;
+ document.getElementById("quizCounter").textContent=`Question ${qIndex+1} of ${questions.length}`;
+ document.getElementById("answers").innerHTML=q.a.map((a,i)=>`<button class="option" onclick="answerQuiz(${i})">${a}</button>`).join("");
+}
+function answerQuiz(i){
+ if(answered)return;answered=true;
+ const q=questions[qIndex];
+ if(i===q.c)correct++;
+ document.querySelectorAll(".option").forEach((b,j)=>{
+  if(j===q.c)b.style.borderColor="#55d9ed";
+  else if(j===i)b.style.borderColor="#ff7979";
+ });
+ const next=document.createElement("button");
+ next.className="btn";next.style.marginTop="15px";
+ next.textContent=qIndex===questions.length-1?"See Results":"Next Question";
+ next.onclick=()=>{
+  qIndex++;answered=false;
+  if(qIndex<questions.length)renderQuestion();else finishQuiz();
+ };
+ document.getElementById("answers").appendChild(next);
+}
+function finishQuiz(){
+ const score=Math.round(correct/questions.length*100);
+ stats.score=Math.max(stats.score,score);
+ stats.lessons++;saveStats();
+ document.getElementById("quizArea").style.display="none";
+ document.getElementById("quizEnd").style.display="block";
+ document.getElementById("finalScore").textContent=score+"%";
+}
+document.getElementById("checkWriting").onclick=()=>{
+ const value=document.getElementById("essay").value.trim();
+ const count=value?value.split(/\s+/).length:0;
+ const result=count===0?"Please write your answer first.":`Word count: ${count}\nCharacter count: ${value.length}\n\nWriting practice saved locally. Review your grammar, spelling, sentence structure and ideas.\n\nNote: This is a basic writing analysis, not an AI correction or IELTS band score.`;
+ document.getElementById("writingResult").textContent=result;
+ if(count>0){stats.lessons++;saveStats();}
+};
+
+let recognition;
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SpeechRecognition){
+ recognition=new SpeechRecognition();
+ recognition.lang="en-US";
+ recognition.continuous=true;
+ recognition.interimResults=true;
+ recognition.onresult=e=>{
+  let text="";
+  for(let i=0;i<e.results.length;i++)text+=e.results[i][0].transcript+" ";
+  document.getElementById("speechResult").textContent=text;
+ };
+ recognition.onerror=e=>{
+  document.getElementById("speechResult").textContent="Voice recognition error: "+e.error;
+ };
+}
+document.getElementById("speakBtn").onclick=()=>{
+ if(!recognition){
+  document.getElementById("speechResult").textContent="Your browser does not support speech recognition. Please try a supported browser.";
+  return;
+ }
+ try{recognition.start();document.getElementById("speechResult").textContent="Listening... Speak in English.";}
+ catch(e){document.getElementById("speechResult").textContent="Voice recognition is already running.";}
+};
+document.getElementById("stopBtn").onclick=()=>{
+ if(recognition)recognition.stop();
+ stats.lessons++;saveStats();
+};
+updateStats();
+renderWords();
+</script>
+</body>
+</html>
